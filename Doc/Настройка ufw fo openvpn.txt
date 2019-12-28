@@ -1,0 +1,33 @@
+ufw --force reset
+
+ufw default deny incoming # Use the VPN tunnel for all traffic
+ufw default deny outgoing
+
+ufw allow out on tun0
+ufw allow in on tun0
+
+ufw allow out $port/$protocol # e.g. 1234/udp, depending on your OpenVPN client config
+
+# Prefer resolved hosts to connect to your VPN, enable only if your VPN provider doesn't give you that option
+#ufw allow out 53
+
+# Allow local IPv4 connections, enable as needed, set specific IPs or tighter subnet masks if possible
+ufw allow in on eth0 to 192.168.0.5
+ufw allow out on eth0 to 192.168.0.5
+ufw allow in to 192.168.0.5 from 192.168.0.0/24
+ufw allow out to 192.168.0.5 from 192.168.0.0/24
+ufw allow in to 192.168.0.0/24 from 192.168.0.5
+ufw allow out to 192.168.0.0/24 from 192.168.0.5
+# Allow IPv4 local multicasts
+#ufw allow out to 224.0.0.0/24
+#ufw allow out to 239.0.0.0/8
+# Allow local IPv6 connections
+#ufw allow out to fe80::/64
+# Allow IPv6 link-local multicasts
+#ufw allow out to ff01::/16
+# Allow IPv6 site-local multicasts
+#ufw allow out to ff02::/16
+#ufw allow out to ff05::/16
+
+# Enable the firewall
+ufw enable

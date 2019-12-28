@@ -1,0 +1,10 @@
+
+12
+down vote
+first enter the following command in the terminal
+
+ sudo rm /var/lib/apt/lists/* -vf
+then update your system by entering the following command in the terminal
+
+ sudo apt-get update && sudo apt-get upgrade
+after this there should be no errors and everything should work fine.
